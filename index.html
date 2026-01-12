@@ -1,83 +1,725 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panduan Penggunaan Aplikasi</title>
-
-<style>
-    body{
-        font-family: Arial, Helvetica, sans-serif;
-        background:#f4f6fb;
-        margin:0;
-    }
-    header{
-        background:#0d6efd;
-        padding:18px;
-        color:white;
-        text-align:center;
-    }
-    .container{
-        max-width:900px;
-        margin:30px auto;
-        background:white;
-        border-radius:10px;
-        padding:25px;
-        box-shadow:0 5px 20px rgba(0,0,0,0.1);
-    }
-    h2{
-        color:#052c65;
-        margin-top:0;
-    }
-    .note{
-        background:#eaf1ff;
-        border-left:5px solid #0d6efd;
-        padding:10px;
-        margin-bottom:15px;
-    }
-    ul{
-        line-height:1.7;
-    }
-    footer{
-        text-align:center;
-        padding:15px;
-        color:#666;
-        margin-top:20px;
-    }
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FotoMetadata - Aplikasi Pembaca Metadata Foto</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #1abc9c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-brand img {
+            height: 60px;
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 80px 0 60px;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Content Sections */
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+        }
+        
+        .feature-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .requirements-list, .limitations-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .requirements-list li, .limitations-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .requirements-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .limitations-list li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #e74c3c;
+        }
+        
+        /* Table Preview */
+        .table-preview {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #16a085;
+            border-color: #16a085;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        /* How-to Steps */
+        .step {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content h5 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="splash.png" alt="Logo">
+                    EXIF Photo Metadata Reader
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#home"><i class="bi bi-house-door"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about"><i class="bi bi-info-circle"></i> About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features"><i class="bi bi-star"></i> Fitur</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#usage"><i class="bi bi-gear"></i> Penggunaan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact"><i class="bi bi-envelope"></i> Kontak</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<header>
-    <h1>Panduan Penggunaan Aplikasi</h1>
-</header>
+    <!-- Hero Section -->
+    <section id="home" class="hero text-center">
+        <div class="container">
+            <h1>Aplikasi Pembaca Metadata Foto</h1>
+            <p>Ekstrak informasi metadata dari foto dengan mudah dan cepat. Validasi data dokumentasi lapangan agar akurat, mudah diverifikasi, dan siap olah sesuai kebutuhan.</p>
+            <a href="#usage" class="btn btn-success btn-lg"><i class="bi bi-play-circle"></i> Mulai Panduan</a>
+        </div>
+    </section>
 
-<div class="container">
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Tentang Aplikasi</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="lead">
+                        Aplikasi ini dirancang khusus untuk membaca metadata dari foto, terutama informasi penting yang diperlukan untuk validasi data dokumentasi lapangan.
+                    </p>
+                    <p>
+                        Dengan aplikasi ini, Anda dapat dengan mudah mengekstrak informasi seperti nama file, tanggal & waktu pengambilan gambar, koordinat GPS, dan deskripsi foto sesuai label EXIF.
+                    </p>
+                    <p>
+                        Aplikasi ini membantu proses validasi data dokumentasi lapangan agar akurat, mudah diverifikasi, dan dapat langsung diolah sesuai kebutuhan.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="bi bi-camera"></i>
+                            </div>
+                            <h5 class="card-title">Informasi yang Diekstrak</h5>
+                            <ul class="requirements-list text-start">
+                                <li>Nama file</li>
+                                <li>Tanggal & Waktu pengambilan gambar</li>
+                                <li>Koordinat GPS (Latitude & Longitude)</li>
+                                <li>Format koordinat gabungan</li>
+                                <li>Deskripsi sesuai label EXIF pada foto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requirements & Limitations -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="section-title">Ketentuan Penggunaan</h3>
+                    <p>Aplikasi hanya dapat bekerja pada:</p>
+                    <ul class="requirements-list">
+                        <li>File foto asli (original) langsung dari kamera/HP yang diambil menggunakan aplikasi Timestamp camera</li>
+                        <li>Foto yang belum mengalami proses penghapusan metadata</li>
+                    </ul>
+                    
+                    <h5 class="mt-4">Sumber File yang Didukung:</h5>
+                    <ul class="requirements-list">
+                        <li>External drive (Flashdisk / Harddisk)</li>
+                        <li>File yang ditransfer menggunakan Kabel USB</li>
+                        <li>File yang di Share di Google Drive</li>
+                        <li>Local storage</li>
+                    </ul>
+                    <p class="text-muted mt-3"><small>Catatan: Jika metadata hilang, maka data waktu dan koordinat tidak dapat ditampilkan.</small></p>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="section-title">Batasan Penggunaan</h3>
+                    <p>Aplikasi tidak dapat membaca metadata dari:</p>
+                    <ul class="limitations-list">
+                        <li>Foto dikirim melalui WhatsApp / Telegram</li>
+                        <li>Foto hasil Screenshot</li>
+                        <li>Foto yang sudah di-compress oleh aplikasi tertentu</li>
+                        <li>Foto yang metadata-nya telah dihapus atau diubah</li>
+                        <li>File yang bukan gambar (video, dokumen, dll)</li>
+                    </ul>
+                    
+                    <div class="alert alert-warning mt-4">
+                        <i class="bi bi-exclamation-triangle"></i> <strong>Penting:</strong> Pastikan foto yang akan diproses adalah foto asli yang masih mengandung metadata EXIF.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Fitur Utama Aplikasi</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                            <h5 class="card-title">Input Folder</h5>
+                            <p class="card-text">Memilih folder berisi kumpulan foto untuk diproses otomatis. Aplikasi akan membaca semua foto yang valid dalam folder tersebut.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="bi bi-play-btn"></i>
+                            </div>
+                            <h5 class="card-title">Start Processing</h5>
+                            <p class="card-text">Memulai proses ekstraksi metadata setelah folder dipilih. Aplikasi akan mengekstrak informasi dari semua foto yang valid.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="bi bi-clipboard"></i>
+                            </div>
+                            <h5 class="card-title">Copy All Data</h5>
+                            <p class="card-text">Menyalin semua data pada tabel ke clipboard untuk digunakan di aplikasi lain seperti Excel atau Google Sheets.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="bi bi-table"></i>
+                            </div>
+                            <h5 class="card-title">Preview Tabel Metadata</h5>
+                            <p class="card-text">Menampilkan metadata yang diekstrak dalam format tabel yang rapi dan mudah dibaca.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="bi bi-globe"></i>
+                            </div>
+                            <h5 class="card-title">Export KML</h5>
+                            <p class="card-text">Menghasilkan file KML untuk ditampilkan di Google Earth atau aplikasi GIS lainnya.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="bi bi-file-earmark-excel"></i>
+                            </div>
+                            <h5 class="card-title">Export Excel</h5>
+                            <p class="card-text">Menyimpan data metadata menjadi file Excel untuk analisis dan pelaporan lebih lanjut.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table Preview -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Preview Tabel Metadata</h2>
+            <p class="mb-4">Berikut adalah contoh tampilan tabel metadata yang dihasilkan oleh aplikasi:</p>
+            
+            <div class="table-responsive table-preview">
+                <table class="table table-hover table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="sortable">Nama File <i class="bi bi-arrow-down-up"></i></th>
+                            <th scope="col" class="sortable">Tanggal & Waktu <i class="bi bi-arrow-down-up"></i></th>
+                            <th scope="col" class="sortable">Koordinat Gabungan <i class="bi bi-arrow-down-up"></i></th>
+                            <th scope="col" class="sortable">Latitude <i class="bi bi-arrow-down-up"></i></th>
+                            <th scope="col" class="sortable">Longitude <i class="bi bi-arrow-down-up"></i></th>
+                            <th scope="col">Deskripsi Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    <tr>
+        <td>IMG_20230515_083456.jpg</td>
+        <td>2023-05-15 08:34:56</td>
+        <td>-6.2088, 106.8456</td>
+        <td>-6.2088</td>
+        <td>106.8456</td>
+        <td>Joint Box rusak - lokasi A</td>
+    </tr>
+    <tr>
+        <td>DSC_0123.jpg</td>
+        <td>2023-05-14 14:22:10</td>
+        <td>-6.1751, 106.8650</td>
+        <td>-6.1751</td>
+        <td>106.8650</td>
+        <td>Kabel putus pada saluran B</td>
+    </tr>
+    <tr>
+        <td>PICTURE_001.jpg</td>
+        <td>2023-05-13 11:05:30</td>
+        <td>-6.2000, 106.8167</td>
+        <td>-6.2000</td>
+        <td>106.8167</td>
+        <td>Connector lepas - pengecekan C</td>
+    </tr>
+    <tr>
+        <td>20230512_093000.jpg</td>
+        <td>2023-05-12 09:30:00</td>
+        <td>-6.2214, 106.7800</td>
+        <td>-6.2214</td>
+        <td>106.7800</td>
+        <td>Kabel terkelupas di jaringan D</td>
+    </tr>
+</tbody>
+
+                </table>
+            </div>
+            <div class="mt-3">
+                <small class="text-muted"><i class="bi bi-info-circle"></i> Klik header tabel untuk melakukan sorting (ascending/descending)</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section id="usage" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Panduan Penggunaan</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Pilih Folder Berisi Foto</h5>
+                            <p>Klik tombol "Input Folder" dan pilih folder yang berisi foto-foto yang ingin diproses. Pastikan foto dalam folder adalah foto asli dengan metadata EXIF yang masih utuh.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Mulai Proses Ekstraksi</h5>
+                            <p>Setelah folder dipilih, klik tombol "Start" untuk memulai proses ekstraksi metadata. Aplikasi akan membaca semua foto yang valid dalam folder tersebut.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Lihat Hasil di Tabel</h5>
+                            <p>Setelah proses selesai, metadata akan ditampilkan dalam tabel. Anda dapat mengklik header tabel untuk mengurutkan data berdasarkan kolom tertentu.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h5>Ekspor Data</h5>
+                            <p>Gunakan tombol "Export KML" untuk membuat file KML yang dapat dibuka di Google Earth, atau "Export Excel" untuk menyimpan data dalam format spreadsheet.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h5>Reset atau Selesaikan</h5>
+                            <p>Setelah selesai, Anda dapat menggunakan tombol "Reset" untuk menghapus semua data dan kembali ke kondisi awal, atau "Exit" untuk menutup aplikasi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Kirim Pesan ke Email</h2>
+            <p class="mb-4">Hubungi kami untuk pertanyaan, masukan, atau bantuan terkait penggunaan aplikasi.</p>
+            
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Alamat Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subjek Pesan</label>
+                                <input type="text" class="form-control" id="subject" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Pesan</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-send"></i> Kirim Pesan
+                                </button>
+                            </div>
+                            
+                            <div id="formAlert" class="alert mt-3 d-none"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <h5 class="mb-3">FotoMetadata</h5>
+                    <p>Aplikasi pembaca metadata foto untuk validasi data dokumentasi lapangan.</p>
+                    <p class="mb-0">
+                        <a href="#home" class="text-light me-3"><i class="bi bi-house-door"></i> Home</a>
+                        <a href="#about" class="text-light me-3"><i class="bi bi-info-circle"></i> About</a>
+                        <a href="#contact" class="text-light"><i class="bi bi-envelope"></i> Contact</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <p class="mb-0">&copy; 2026 Extra Metadata EXIF - Developed by WHG</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
-    <div class="note">
-        Halaman ini akan berisi panduan lengkap penggunaan aplikasi.
-    </div>
-
-    <h2>1. Pendahuluan</h2>
-    <p>Aplikasi ini digunakan untuk membantu pengguna dalam melakukan pengolahan data dan informasi secara efektif dan mudah.</p>
-
-    <h2>2. Cara Menggunakan</h2>
-    <ul>
-        <li>Buka aplikasi</li>
-        <li>Pilih menu yang ingin digunakan</li>
-        <li>Ikuti langkah sesuai instruksi pada aplikasi</li>
-        <li>Simpan hasil jika diperlukan</li>
-    </ul>
-
-    <h2>3. Informasi Tambahan</h2>
-    <p>Panduan lengkap, contoh penggunaan, dan dokumentasi detail akan ditempatkan di halaman ini.</p>
-
-</div>
-
-<footer>
-    &copy; 2026 — WHG Application Guide
-</footer>
-
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script>
+        // Initialize EmailJS
+        (function() {
+            // Ganti dengan Public Key EmailJS Anda
+            emailjs.init('CR_JXj2B_s0d33qpu');
+        })();
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Mengirim...';
+            submitBtn.disabled = true;
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Ganti dengan Service ID dan Template ID EmailJS Anda
+            const serviceID = 'service_yh85ffc';
+            const templateID = 'template_48h314l';
+            
+            // Send email using EmailJS
+            emailjs.send(serviceID, templateID, formData)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    
+                    // Show success message
+                    const alertDiv = document.getElementById('formAlert');
+                    alertDiv.className = 'alert alert-success';
+                    alertDiv.innerHTML = '<i class="bi bi-check-circle"></i> Pesan berhasil dikirim! Kami akan membalas pesan Anda segera.';
+                    alertDiv.classList.remove('d-none');
+                    
+                    // Reset form
+                    document.getElementById('contactForm').reset();
+                    
+                    // Scroll to alert
+                    alertDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    
+                    // Show error message
+                    const alertDiv = document.getElementById('formAlert');
+                    alertDiv.className = 'alert alert-danger';
+                    alertDiv.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Terjadi kesalahan. Silakan coba lagi atau hubungi kami melalui cara lain.';
+                    alertDiv.classList.remove('d-none');
+                    
+                    // Scroll to alert
+                    alertDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                })
+                .finally(function() {
+                    // Reset button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // Simple table sorting simulation
+        document.querySelectorAll('.sortable').forEach(header => {
+            header.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('bi-arrow-down-up')) {
+                    icon.classList.remove('bi-arrow-down-up');
+                    icon.classList.add('bi-arrow-up');
+                } else if (icon.classList.contains('bi-arrow-up')) {
+                    icon.classList.remove('bi-arrow-up');
+                    icon.classList.add('bi-arrow-down');
+                } else {
+                    icon.classList.remove('bi-arrow-down');
+                    icon.classList.add('bi-arrow-up');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
